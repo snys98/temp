@@ -1,0 +1,23 @@
+{
+    "type": "mssql",
+    "host": "localhost",
+    "port": 1433,
+    "username": "dev",
+    "password": "dev",
+    "database": "test",
+    "synchronize": true,
+    "logging": true,
+    "entities": [
+        "src/domain/entities/**/*.ts"
+    ],
+    "migrations": [
+        "src/infrastructure/migrations/**/*.ts"
+    ],
+    "subscribers": [
+        "src/domain/subscribers/**/*.ts"
+    ],
+    "migrationsTableName": "migrations",
+    "cli": {
+        "migrationsDir": "src/infrastructure/migrations"
+    }
+}
