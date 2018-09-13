@@ -4,12 +4,15 @@ let morgan = require("morgan");
 
 import { Container } from "typedi";
 import { UserRepo } from "./domain/repos/user.repo";
-import { buildSchema, useContainer } from "type-graphql";
+import * as graphql from "type-graphql";
+import * as typeorm from "typeorm";
 import { GraphQLServer, Options } from "graphql-yoga";
 import { UserResolver } from "./application/resolvers/user.resolver";
 async function bootstrap() {
-    useContainer(Container);
-    const schema = await buildSchema({
+    typeorm.useContainer(Container);
+    graphql.useContainer(Container);
+    await typeorm.createConnection("default");
+    const schema = await graphql.buildSchema({
         // resolvers: [__dirname + "/**/*.resolver.ts"],
         resolvers: [UserResolver],
     });
@@ -32,11 +35,11 @@ async function bootstrap() {
     // other initialization code, like creating http server
 }
 bootstrap();
-let app = express();
-app.use(morgan("short"));
-app.use(function (request, response) {
-    response.writeHead(200, { "Content-Type": "text/plain" });
-    response.end("Hello, World1233!");
-});
+// let app = express();
+// app.use(morgan("short"));
+// app.use(function (request, response) {
+//     response.writeHead(200, { "Content-Type": "text/plain" });
+//     response.end("Hello, World1233!");
+// });
 
-http.createServer(app).listen(3000);
+// http.createServer(app).listen(3000);
